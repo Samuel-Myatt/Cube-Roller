@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class roll : MonoBehaviour
+public class rollGhost : MonoBehaviour
 {
     // Start is called before the first frame update
     public int speed = 600;
@@ -10,7 +10,7 @@ public class roll : MonoBehaviour
 
     bool buffer = false;
     public int bufferlength = 100;
-    int curtile = 1;
+    public int curtile = 1;
     public bool safe = true;
     public float health = 100f;
 
@@ -19,14 +19,14 @@ public class roll : MonoBehaviour
     public TilesManager tilesManager;
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-		if (!isMoving)
+
+        /*if (!isMoving)
 		{
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
@@ -75,24 +75,48 @@ public class roll : MonoBehaviour
 		if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow))
 		{
             buffer = false;
-		}
+		}*/
 
     }
     public void GreenCheck()
-	{
+    {
         if (tilesManager.tiles[curtile - 1].GetComponent<FloorTile>().green == true)
         {
             tilesManager.tiles[curtile].GetComponent<FloorTile>().Advance(4, 0f);
             health += 5f;
         }
     }
-	private void FixedUpdate()
+    private void FixedUpdate()
+    {
+        //health -= 0.5f * Time.deltaTime;
+    }
+    public void RollActivate(int tile)
 	{
-        health -= 0.5f * Time.deltaTime;
+        StartCoroutine(Roll(tile));
 	}
-	IEnumerator Roll (Vector3 direction)
-    { 
+	IEnumerator Roll(int tile)
+    {
+        Vector3 direction = Vector3.left;
         isMoving = true;
+       
+        switch(curtile - tile)
+		{
+            case -3:
+                direction = Vector3.back;
+                Debug.Log("DOWN");
+                break;
+            case -1:
+                direction = Vector3.right;
+                break;
+            case 1:
+                direction = Vector3.left;
+                break;
+            case 3:
+                direction = Vector3.forward;
+                Debug.Log("UP");
+                break;
+		}
+        curtile = tile;
         float remainingAngle = 90;
         Vector3 rotationCenter = transform.position + direction / 2 + Vector3.down / 2;
         Vector3 rotationAxis = Vector3.Cross(Vector3.up, direction);
@@ -104,11 +128,8 @@ public class roll : MonoBehaviour
             remainingAngle -= rotatingAngle;
             yield return null;
 		}
-        if(levelWriter.enabled == true)
-		{
-            levelWriter.addToFile(audioManager.songPosition, curtile);
-        }
-        tilesManager.TileGlow(curtile - 1, false);
+
+        tilesManager.TileGlow(curtile-1, true);
         isMoving = false;
 	}
 }

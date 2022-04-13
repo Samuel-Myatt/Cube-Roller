@@ -14,6 +14,7 @@ public class LevelReader : MonoBehaviour
     public List<int> tiles;
     public AudioManager audioManager;
     public TilesManager tileManager;
+    public rollGhost rollGhost;
     // Start is called before the first frame update
     void Start()
     {
@@ -68,7 +69,7 @@ public class LevelReader : MonoBehaviour
         {
             Debug.Log(Math.Round(times[count], 2) + "ROUNDED, NEXT ONE SHOULD BE " + Math.Round(times[count + 1], 2));
 
-            tileManager.triggerTile(tiles[count] - 1, times[count+1] - times[count]);
+            rollGhost.RollActivate(tiles[count]);
             count++;
         }
     }

@@ -43,6 +43,20 @@ public class FloorTile : MonoBehaviour
         
         
     }
+
+    public void Glow(bool on)
+    {
+        if (on)
+		{
+            transform.GetChild(0).gameObject.active = true;
+        }
+        else
+		{
+            transform.GetChild(0).gameObject.active = false;
+        }
+        
+	}
+    
     public void Advance(int tile, float delay)
 	{
         switch(tile)

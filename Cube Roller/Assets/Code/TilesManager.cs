@@ -27,6 +27,10 @@ public class TilesManager : MonoBehaviour
         }
     }
 
+    public void TileGlow(int tile, bool on)
+	{
+        tiles[tile].GetComponent<FloorTile>().Glow(on);
+	}
     public void triggerTile(int tile, float delay)
 	{
         //tiles[tile].GetComponent<FloorTile>().TriggerCall(delay);
