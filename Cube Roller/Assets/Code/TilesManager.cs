@@ -31,7 +31,23 @@ public class TilesManager : MonoBehaviour
 	{
         tiles[tile].GetComponent<FloorTile>().Glow(on);
 	}
-    public void triggerTile(int tile, float delay)
+
+    public void ResetQueue()
+	{
+        int temp = tileQueue.Count;
+		for (int i = 0; i < temp; i++)
+		{
+            tiles[tileQueue.Dequeue() - 1].GetComponent<FloorTile>().Glow(false);
+		}
+        
+	}
+    public void AddtoQueue(int tile)
+	{
+        tileQueue.Enqueue(tile);
+	}
+
+
+    /*public void triggerTile(int tile, float delay)
 	{
         //tiles[tile].GetComponent<FloorTile>().TriggerCall(delay);
         tileQueue.Enqueue(tile);
@@ -59,7 +75,7 @@ public class TilesManager : MonoBehaviour
             tileQueue.Dequeue();
         }
     }
-
+    */
 
     
 }

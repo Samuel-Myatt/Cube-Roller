@@ -130,6 +130,7 @@ public class rollGhost : MonoBehaviour
 		}
 
         tilesManager.TileGlow(curtile-1, true);
+        tilesManager.AddtoQueue(curtile);
         isMoving = false;
 	}
 }

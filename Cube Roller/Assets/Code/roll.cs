@@ -17,6 +17,7 @@ public class roll : MonoBehaviour
     public LevelWriter levelWriter;
     public AudioManager audioManager;
     public TilesManager tilesManager;
+    public SoundEffectsManager soundEffects;
     void Start()
     {
         
@@ -109,6 +110,25 @@ public class roll : MonoBehaviour
             levelWriter.addToFile(audioManager.songPosition, curtile);
         }
         tilesManager.TileGlow(curtile - 1, false);
+        if (tilesManager.tileQueue.Count > 0)
+        {
+            if (curtile != tilesManager.tileQueue.Peek())
+            {
+                tilesManager.ResetQueue();
+            }
+            else
+            {
+                if (tilesManager.tileQueue.Count == 1)
+                {
+                    soundEffects.PlaySound("Land2");
+                }
+                else
+                {
+                    soundEffects.PlaySound("Land1");
+                }
+                tilesManager.tileQueue.Dequeue();
+            }
+        }
         isMoving = false;
 	}
 }
