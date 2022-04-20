@@ -7,7 +7,7 @@ public class FloorTile : MonoBehaviour
 
     public int currTile = 3;
     public bool green = false;
-    
+    public List<Material> mats;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,18 +44,53 @@ public class FloorTile : MonoBehaviour
         
     }
 
-    public void Glow(bool on)
+    public void Glow(bool on,int mat)
     {
         if (on)
 		{
-            transform.GetChild(0).gameObject.active = true;
+            if(transform.GetChild(0).gameObject.active == true)
+			{
+                if (transform.GetChild(1).gameObject.active == true)
+                {
+                    transform.GetChild(2).gameObject.active = true;
+                    transform.GetChild(2).gameObject.GetComponent<Renderer>().material = mats[mat];
+                }
+                else
+                {
+                    transform.GetChild(1).gameObject.active = true;
+                    transform.GetChild(1).gameObject.GetComponent<Renderer>().material = mats[mat];
+                }
+
+
+            }
+            else
+			{
+                transform.GetChild(0).gameObject.active = true;
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = mats[mat];
+            }
+            
         }
         else
 		{
             transform.GetChild(0).gameObject.active = false;
+            transform.GetChild(1).gameObject.active = false;
+            transform.GetChild(2).gameObject.active = false;
         }
         
 	}
+    public void TurnOffHighest()
+	{
+        int temp;
+		for (int i = 0; i <= 2; i++)
+		{
+            if (transform.GetChild(i).gameObject.active == true)
+			{
+                transform.GetChild(i).gameObject.active = false;
+                break;
+            }
+        }
+
+    }
     
     public void Advance(int tile, float delay)
 	{

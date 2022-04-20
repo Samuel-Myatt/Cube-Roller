@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 00d42b2ef9f8c114ca38eea175cac189, type: 2}
+  - {fileID: 2100000, guid: 5dec64eb45d4de44383084c429d60b4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -116,6 +116,7 @@ MonoBehaviour:
   levelWriter: {fileID: 0}
   audioManager: {fileID: 0}
   tilesManager: {fileID: 0}
+  soundEffects: {fileID: 0}
 --- !u!1001 &3905072767376767713
 PrefabInstance:
   m_ObjectHideFlags: 0

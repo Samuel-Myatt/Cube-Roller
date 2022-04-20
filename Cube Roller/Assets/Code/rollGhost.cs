@@ -129,8 +129,9 @@ public class rollGhost : MonoBehaviour
             yield return null;
 		}
 
-        tilesManager.TileGlow(curtile-1, true);
+        
         tilesManager.AddtoQueue(curtile);
+        tilesManager.TileGlow(curtile - 1, true);
         isMoving = false;
 	}
 }

@@ -33,8 +33,9 @@ public class roll : MonoBehaviour
             {
                 if((curtile%3 != 0) && (!buffer))
 				{
-                    StartCoroutine(Roll(Vector3.right));
                     curtile += 1;
+                    StartCoroutine(Roll(Vector3.right));
+                    
                     GreenCheck();
                     buffer = true;
                 }
@@ -44,8 +45,9 @@ public class roll : MonoBehaviour
             {
                 if((curtile % 3 != 1) && (!buffer))
                 {
-                    StartCoroutine(Roll(Vector3.left));
                     curtile -= 1;
+                    StartCoroutine(Roll(Vector3.left));
+                    
                     GreenCheck();
                     buffer = true;
                 }
@@ -55,8 +57,9 @@ public class roll : MonoBehaviour
             {
 				if((curtile < 7) && (!buffer))
                 {
-                    StartCoroutine(Roll(Vector3.back));
                     curtile += 3;
+                    StartCoroutine(Roll(Vector3.back));
+                    
                     GreenCheck();
                     buffer = true;
                 }
@@ -66,8 +69,9 @@ public class roll : MonoBehaviour
             {
                 if((curtile > 3) && (!buffer))
                 {
-                    StartCoroutine(Roll(Vector3.forward));
                     curtile -= 3;
+                    StartCoroutine(Roll(Vector3.forward));
+                    
                     GreenCheck();
                     buffer = true;
                 }
@@ -97,19 +101,13 @@ public class roll : MonoBehaviour
         float remainingAngle = 90;
         Vector3 rotationCenter = transform.position + direction / 2 + Vector3.down / 2;
         Vector3 rotationAxis = Vector3.Cross(Vector3.up, direction);
-
-		while (remainingAngle > 0)
-		{
-            float rotatingAngle = Mathf.Min(Time.deltaTime * speed, remainingAngle);
-            transform.RotateAround(rotationCenter, rotationAxis, rotatingAngle);
-            remainingAngle -= rotatingAngle;
-            yield return null;
-		}
-        if(levelWriter.enabled == true)
-		{
+        if (levelWriter.enabled == true)
+        {
             levelWriter.addToFile(audioManager.songPosition, curtile);
         }
-        tilesManager.TileGlow(curtile - 1, false);
+
+
+        tilesManager.TileTurnOff(curtile);
         if (tilesManager.tileQueue.Count > 0)
         {
             if (curtile != tilesManager.tileQueue.Peek())
@@ -121,6 +119,7 @@ public class roll : MonoBehaviour
                 if (tilesManager.tileQueue.Count == 1)
                 {
                     soundEffects.PlaySound("Land2");
+                    transform.GetChild(0).gameObject.GetComponent<ParticleSystem>().Play();
                 }
                 else
                 {
@@ -129,6 +128,13 @@ public class roll : MonoBehaviour
                 tilesManager.tileQueue.Dequeue();
             }
         }
+        while (remainingAngle > 0)
+		{
+            float rotatingAngle = Mathf.Min(Time.deltaTime * speed, remainingAngle);
+            transform.RotateAround(rotationCenter, rotationAxis, rotatingAngle);
+            remainingAngle -= rotatingAngle;
+            yield return null;
+		}
         isMoving = false;
 	}
 }
