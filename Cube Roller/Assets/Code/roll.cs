@@ -11,13 +11,16 @@ public class roll : MonoBehaviour
     bool buffer = false;
     public int bufferlength = 100;
     int curtile = 1;
-    public bool safe = true;
-    public float health = 100f;
-
+    public bool turn = false;
+    public int lives = 5;
+    public int points = 0;
     public LevelWriter levelWriter;
+    public LevelReader levelReader;
     public AudioManager audioManager;
     public TilesManager tilesManager;
     public SoundEffectsManager soundEffects;
+    public GameObject ghostCube;
+    public UIScript UI;
     void Start()
     {
         
@@ -25,54 +28,53 @@ public class roll : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        
+    { 
 		if (!isMoving)
 		{
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                if((curtile%3 != 0) && (!buffer))
-				{
+                if((curtile%3 != 0) && (!buffer) && turn)
+                {
                     curtile += 1;
                     StartCoroutine(Roll(Vector3.right));
                     
-                    GreenCheck();
+                    
                     buffer = true;
                 }
                 
             }
             else if(Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                if((curtile % 3 != 1) && (!buffer))
+                if((curtile % 3 != 1) && (!buffer) && turn)
                 {
                     curtile -= 1;
                     StartCoroutine(Roll(Vector3.left));
                     
-                    GreenCheck();
+                    
                     buffer = true;
                 }
                     
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-				if((curtile < 7) && (!buffer))
+				if((curtile < 7) && (!buffer) && turn)
                 {
                     curtile += 3;
                     StartCoroutine(Roll(Vector3.back));
                     
-                    GreenCheck();
+                    
                     buffer = true;
                 }
                 
             }
             else if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                if((curtile > 3) && (!buffer))
+                if((curtile > 3) && (!buffer) && turn)
                 {
                     curtile -= 3;
                     StartCoroutine(Roll(Vector3.forward));
                     
-                    GreenCheck();
+                    
                     buffer = true;
                 }
             }
@@ -83,20 +85,43 @@ public class roll : MonoBehaviour
 		}
 
     }
-    public void GreenCheck()
-	{
-        if (tilesManager.tiles[curtile - 1].GetComponent<FloorTile>().green == true)
-        {
-            tilesManager.tiles[curtile].GetComponent<FloorTile>().Advance(4, 0f);
-            health += 5f;
-        }
-    }
+   
 	private void FixedUpdate()
 	{
-        health -= 0.5f * Time.deltaTime;
+        if(levelReader.playerTimes.Count > 0 && turn)
+		{
+            if(audioManager.songPosition > (levelReader.playerTimes.Peek() + audioManager.secPerBeat * 2))
+			{
+                MessUp();
+            }
+		}
+	}
+
+    public void MessUp()
+	{
+        Debug.Log("DONE NOT MOVED");
+        tilesManager.ResetQueue();
+        levelReader.playerTimes.Clear();
+        //failedMove = true;
+        lives--;
+        gameObject.transform.position = ghostCube.transform.position;
+        curtile = ghostCube.GetComponent<rollGhost>().curtile;
+        turn = false;
+        UI.UpdateLives(lives);
+        if (lives == 0)
+        {
+            Die();
+        }
+    }
+    public void Die()
+	{
+        Time.timeScale = 0f;
+        Destroy(this.gameObject);
 	}
 	IEnumerator Roll (Vector3 direction)
-    { 
+    {
+        Debug.Log("ROLL CALL " + audioManager.songPosition);
+        bool failedMove = false;
         isMoving = true;
         float remainingAngle = 90;
         Vector3 rotationCenter = transform.position + direction / 2 + Vector3.down / 2;
@@ -110,9 +135,9 @@ public class roll : MonoBehaviour
         tilesManager.TileTurnOff(curtile);
         if (tilesManager.tileQueue.Count > 0)
         {
-            if (curtile != tilesManager.tileQueue.Peek())
+            if ((curtile != tilesManager.tileQueue.Peek()) || audioManager.songPosition > levelReader.playerTimes.Peek()+(audioManager.secPerBeat/2) || audioManager.songPosition < levelReader.playerTimes.Peek() - (audioManager.secPerBeat / 2))
             {
-                tilesManager.ResetQueue();
+                failedMove = true;
             }
             else
             {
@@ -120,12 +145,18 @@ public class roll : MonoBehaviour
                 {
                     soundEffects.PlaySound("Land2");
                     transform.GetChild(0).gameObject.GetComponent<ParticleSystem>().Play();
+                    points += 10;
+                    UI.UpdatePoints(points);
                 }
                 else
                 {
                     soundEffects.PlaySound("Land1");
+                    points += 5;
+                    UI.UpdatePoints(points);
                 }
+                Debug.Log("LANDED ON " + audioManager.songPosition);
                 tilesManager.tileQueue.Dequeue();
+                levelReader.playerTimes.Dequeue();
             }
         }
         while (remainingAngle > 0)
@@ -135,6 +166,11 @@ public class roll : MonoBehaviour
             remainingAngle -= rotatingAngle;
             yield return null;
 		}
+        Debug.Log("ROLL CALL 2: " + audioManager.songPosition);
+        if (failedMove)
+		{
+            MessUp();
+        }
         isMoving = false;
 	}
 }

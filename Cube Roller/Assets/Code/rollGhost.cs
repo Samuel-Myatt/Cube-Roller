@@ -17,6 +17,7 @@ public class rollGhost : MonoBehaviour
     public LevelWriter levelWriter;
     public AudioManager audioManager;
     public TilesManager tilesManager;
+    public SoundEffectsManager soundEffects;
     void Start()
     {
 
@@ -98,7 +99,7 @@ public class rollGhost : MonoBehaviour
     {
         Vector3 direction = Vector3.left;
         isMoving = true;
-       
+        soundEffects.PlaySound("Land1");
         switch(curtile - tile)
 		{
             case -3:

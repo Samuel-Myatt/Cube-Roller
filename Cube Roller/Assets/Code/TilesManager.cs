@@ -21,7 +21,7 @@ public class TilesManager : MonoBehaviour
         {
 			for (int i = 0; i<tiles.Count ; i++)
 			{
-                Debug.Log(tiles[i]);
+                
                 tiles[i].GetComponent<FloorTile>().TriggerCall(0.46153846153f);
 			}
         }

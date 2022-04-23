@@ -8,6 +8,7 @@ public class LevelWriter : MonoBehaviour
     public string fileName;
 
     public int count = 0;
+    public AudioManager audioManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +18,9 @@ public class LevelWriter : MonoBehaviour
 
     public void addToFile(float timeInSong, int tile)
 	{
+        timeInSong = timeInSong / (audioManager.secPerBeat / 4);
+        timeInSong = Mathf.RoundToInt(timeInSong);
+        timeInSong = timeInSong * (audioManager.secPerBeat / 4);
         string content;
         content = "Tile:" + count.ToString() + "\n";
         content += timeInSong + "\n";
@@ -24,7 +28,7 @@ public class LevelWriter : MonoBehaviour
         count++;
         string path = Application.dataPath + "/" + fileName + ".txt";
         File.AppendAllText(path, content);
-        Debug.Log(content);
+        
     }
     public void SaveFile()
 	{
