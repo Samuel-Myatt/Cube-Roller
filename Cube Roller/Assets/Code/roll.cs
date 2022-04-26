@@ -149,15 +149,18 @@ public class roll : MonoBehaviour
 				{
                     tempPoints = 10;
                     Debug.Log("PERFECT");
+                    UI.QualityTextUpdate("Perfect!");
 				}
                 else if (audioManager.songPosition < levelReader.playerTimes.Peek() + (audioManager.secPerBeat * greatWindow) && audioManager.songPosition > levelReader.playerTimes.Peek() - (audioManager.secPerBeat * greatWindow))
 				{
                     Debug.Log("GREAT");
                     tempPoints = 5;
+                    UI.QualityTextUpdate("Great!");
                 }
                 else
 				{
                     Debug.Log("GOOD");
+                    UI.QualityTextUpdate("Good!");
                     tempPoints = 2;
                 }
                 if (tilesManager.tileQueue.Count == 1)

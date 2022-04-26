@@ -7,6 +7,7 @@ using TMPro;
 public class UIScript : MonoBehaviour
 {
     public roll player;
+    public GameObject qualityTextPrefab;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,4 +29,10 @@ public class UIScript : MonoBehaviour
     {
         transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = ("POINTS: " + points);
     }
+
+    public void QualityTextUpdate(string quality)
+	{
+        GameObject textInstance = Instantiate(qualityTextPrefab,this.transform);
+        textInstance.GetComponent<TextMeshProUGUI>().text = quality;
+	}
 }
