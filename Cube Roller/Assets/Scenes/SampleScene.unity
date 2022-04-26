@@ -1944,6 +1944,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 490013682}
     - target: {fileID: 8848258338041162970, guid: b77b740d358bb2b4e844e729463c4a4b, type: 3}
+      propertyPath: goodWindow
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848258338041162970, guid: b77b740d358bb2b4e844e729463c4a4b, type: 3}
+      propertyPath: greatWindow
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848258338041162970, guid: b77b740d358bb2b4e844e729463c4a4b, type: 3}
       propertyPath: levelReader
       value: 
       objectReference: {fileID: 740669931}
@@ -1963,6 +1971,10 @@ PrefabInstance:
       propertyPath: tilesManager
       value: 
       objectReference: {fileID: 1112740894}
+    - target: {fileID: 8848258338041162970, guid: b77b740d358bb2b4e844e729463c4a4b, type: 3}
+      propertyPath: perfectWindow
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 8848258338041162971, guid: b77b740d358bb2b4e844e729463c4a4b, type: 3}
       propertyPath: m_Name
       value: Cube

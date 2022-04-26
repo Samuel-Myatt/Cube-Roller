@@ -14,6 +14,9 @@ public class roll : MonoBehaviour
     public bool turn = false;
     public int lives = 5;
     public int points = 0;
+    public float goodWindow;
+    public float greatWindow;
+    public float perfectWindow;
     public LevelWriter levelWriter;
     public LevelReader levelReader;
     public AudioManager audioManager;
@@ -122,6 +125,7 @@ public class roll : MonoBehaviour
     {
         Debug.Log("ROLL CALL " + audioManager.songPosition);
         bool failedMove = false;
+        int tempPoints;
         isMoving = true;
         float remainingAngle = 90;
         Vector3 rotationCenter = transform.position + direction / 2 + Vector3.down / 2;
@@ -135,23 +139,38 @@ public class roll : MonoBehaviour
         tilesManager.TileTurnOff(curtile);
         if (tilesManager.tileQueue.Count > 0)
         {
-            if ((curtile != tilesManager.tileQueue.Peek()) || audioManager.songPosition > levelReader.playerTimes.Peek()+(audioManager.secPerBeat/2) || audioManager.songPosition < levelReader.playerTimes.Peek() - (audioManager.secPerBeat / 2))
+            if ((curtile != tilesManager.tileQueue.Peek()) || audioManager.songPosition > levelReader.playerTimes.Peek()+(audioManager.secPerBeat*goodWindow) || audioManager.songPosition < levelReader.playerTimes.Peek() - (audioManager.secPerBeat *goodWindow))
             {
                 failedMove = true;
             }
             else
             {
+                if(audioManager.songPosition < levelReader.playerTimes.Peek() + (audioManager.secPerBeat * perfectWindow) && audioManager.songPosition > levelReader.playerTimes.Peek() - (audioManager.secPerBeat * perfectWindow))
+				{
+                    tempPoints = 10;
+                    Debug.Log("PERFECT");
+				}
+                else if (audioManager.songPosition < levelReader.playerTimes.Peek() + (audioManager.secPerBeat * greatWindow) && audioManager.songPosition > levelReader.playerTimes.Peek() - (audioManager.secPerBeat * greatWindow))
+				{
+                    Debug.Log("GREAT");
+                    tempPoints = 5;
+                }
+                else
+				{
+                    Debug.Log("GOOD");
+                    tempPoints = 2;
+                }
                 if (tilesManager.tileQueue.Count == 1)
                 {
                     soundEffects.PlaySound("Land2");
                     transform.GetChild(0).gameObject.GetComponent<ParticleSystem>().Play();
-                    points += 10;
+                    points += tempPoints*2;
                     UI.UpdatePoints(points);
                 }
                 else
                 {
                     soundEffects.PlaySound("Land1");
-                    points += 5;
+                    points += tempPoints;
                     UI.UpdatePoints(points);
                 }
                 Debug.Log("LANDED ON " + audioManager.songPosition);

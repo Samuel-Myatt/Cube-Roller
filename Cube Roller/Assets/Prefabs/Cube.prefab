@@ -111,12 +111,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1200
   bufferlength: 10
-  safe: 1
-  health: 100
+  turn: 0
+  lives: 5
+  points: 0
+  goodWindow: 0
+  greatWindow: 0
+  perfectWindow: 0
   levelWriter: {fileID: 0}
+  levelReader: {fileID: 0}
   audioManager: {fileID: 0}
   tilesManager: {fileID: 0}
   soundEffects: {fileID: 0}
+  ghostCube: {fileID: 0}
+  UI: {fileID: 0}
 --- !u!1001 &3905072767376767713
 PrefabInstance:
   m_ObjectHideFlags: 0
