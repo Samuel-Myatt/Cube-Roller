@@ -18,6 +18,8 @@ public class rollGhost : MonoBehaviour
     public AudioManager audioManager;
     public TilesManager tilesManager;
     public SoundEffectsManager soundEffects;
+    public Material highlightMaterial;
+    public Material normalMaterial;
     void Start()
     {
 

@@ -24,6 +24,8 @@ public class roll : MonoBehaviour
     public SoundEffectsManager soundEffects;
     public GameObject ghostCube;
     public UIScript UI;
+    public Material highlightMaterial;
+    public Material normalMaterial;
     void Start()
     {
         
@@ -93,7 +95,7 @@ public class roll : MonoBehaviour
 	{
         if(levelReader.playerTimes.Count > 0 && turn)
 		{
-            if(audioManager.songPosition > (levelReader.playerTimes.Peek() + audioManager.secPerBeat * 2))
+            if(audioManager.songPosition > (levelReader.playerTimes.Peek() + audioManager.secPerBeat /1.5))
 			{
                 MessUp();
             }
@@ -105,6 +107,7 @@ public class roll : MonoBehaviour
         Debug.Log("DONE NOT MOVED");
         tilesManager.ResetQueue();
         levelReader.playerTimes.Clear();
+        soundEffects.PlaySound("Fail");
         //failedMove = true;
         lives--;
         gameObject.transform.position = ghostCube.transform.position;
@@ -115,10 +118,12 @@ public class roll : MonoBehaviour
         {
             Die();
         }
+        UI.QualityTextUpdate("Miss!");
     }
     public void Die()
 	{
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
+        UI.ActivateLoss();
         Destroy(this.gameObject);
 	}
 	IEnumerator Roll (Vector3 direction)

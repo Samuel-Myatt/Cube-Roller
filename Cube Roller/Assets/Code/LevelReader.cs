@@ -20,6 +20,8 @@ public class LevelReader : MonoBehaviour
     public TilesManager tileManager;
     public rollGhost rollGhost;
     public roll player;
+    public GameObject playerGameObject;
+    public GameObject ghostGameObject;
     public bool GhostTurn = false;
     bool tempBool = false;
     int lastTurn = 0;
@@ -45,7 +47,7 @@ public class LevelReader : MonoBehaviour
             float tempFloat;
             float.TryParse(content, out tempFloat);
             //tempFloat -= audioManager.secPerBeat * 2;
-            tempFloat -= audioManager.secPerBeat / 4;
+            tempFloat -= audioManager.secPerBeat / 2;
             times.Add(tempFloat);
             content = fileLines[(i * 3) + 2];
             int tempInt;
@@ -120,6 +122,8 @@ public class LevelReader : MonoBehaviour
 			{
                 GhostTurn = true;
                 player.turn = false;
+                ghostGameObject.GetComponent<Renderer>().material = rollGhost.highlightMaterial;
+                playerGameObject.GetComponent<Renderer>().material = player.normalMaterial;
                 tileManager.ResetQueue();
                 ghostTurnsCounter++;
 			}
@@ -134,6 +138,8 @@ public class LevelReader : MonoBehaviour
                 //playerTimes.Clear();
                 GhostTurn = false;
                 player.turn = true;
+                ghostGameObject.GetComponent<Renderer>().material = rollGhost.normalMaterial;
+                playerGameObject.GetComponent<Renderer>().material = player.highlightMaterial;
             }
             count++;
             tempBool = true;
