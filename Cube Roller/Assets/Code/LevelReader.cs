@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -22,6 +23,7 @@ public class LevelReader : MonoBehaviour
     public roll player;
     public GameObject playerGameObject;
     public GameObject ghostGameObject;
+    public UIScript ui;
     public bool GhostTurn = false;
     bool tempBool = false;
     int lastTurn = 0;
@@ -47,7 +49,8 @@ public class LevelReader : MonoBehaviour
             float tempFloat;
             float.TryParse(content, out tempFloat);
             //tempFloat -= audioManager.secPerBeat * 2;
-            tempFloat -= audioManager.secPerBeat / 2;
+            //tempFloat -= audioManager.secPerBeat / 2;//BUILD VERSION
+            tempFloat -= audioManager.secPerBeat / 4;//EDITOR
             times.Add(tempFloat);
             content = fileLines[(i * 3) + 2];
             int tempInt;
@@ -60,7 +63,7 @@ public class LevelReader : MonoBehaviour
 		for (int i = 0; i < times.Count-1; i++)
 		{
             
-            if(times[i+1] - times[i] > audioManager.secPerBeat*3)
+            if(times[i+1] - times[i] > audioManager.secPerBeat*2)
 			{
                 if (turnTimes.Count == 0)
                 {
@@ -144,5 +147,15 @@ public class LevelReader : MonoBehaviour
             count++;
             tempBool = true;
         }
+
+        if(turnTimes.Count == 0)
+		{
+            StartCoroutine(End(turnLengths[ghostTurnsCounter]+1 * audioManager.secPerBeat));
+		}
+    }
+    IEnumerator End(float delay)
+	{
+        yield return new WaitForSeconds(delay);
+        ui.ActivateWin();
     }
 }

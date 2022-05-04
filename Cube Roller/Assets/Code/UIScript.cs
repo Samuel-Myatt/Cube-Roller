@@ -10,6 +10,7 @@ public class UIScript : MonoBehaviour
     public roll player;
     public GameObject qualityTextPrefab;
     public GameObject lossMenu;
+    public GameObject winMenu;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,12 +45,19 @@ public class UIScript : MonoBehaviour
         Application.LoadLevel(Application.loadedLevel);
     }
 
-    public void ActivateLoss()
+    public void ActivateWin()
 	{
+        winMenu.active = true;
+        winMenu.GetComponent<Animator>().Play("LossMenu");
+        winMenu.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "You Scored: " + player.points.ToString() + "!";
+	}
+
+    public void ActivateLoss()
+    {
         lossMenu.active = true;
         lossMenu.GetComponent<Animator>().Play("LossMenu");
         lossMenu.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "You Scored: " + player.points.ToString() + "!";
-	}
+    }
     public void MainMenu()
 	{
         // go to main menu

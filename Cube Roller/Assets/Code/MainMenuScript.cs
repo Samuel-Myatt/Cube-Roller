@@ -12,6 +12,8 @@ public class MainMenuScript : MonoBehaviour
     public int selectedMenu = 0;
     public GameObject curMenu;
     public SoundEffectsManager soundEffects;
+    public GameObject music;
+    public float volume = 1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -72,6 +74,13 @@ public class MainMenuScript : MonoBehaviour
                             curMenu.active = true;
                             selectedMenu = 0;
                             break;
+                        case 0:
+                            VolumeChange();
+                            break;
+                        case 1:
+                            FullScreen();
+                            break;
+
                     }
                     break;
                 case 3:
@@ -94,6 +103,27 @@ public class MainMenuScript : MonoBehaviour
         }
     }
 
+    public void VolumeChange()
+	{
+        if(volume >= 100)
+		{
+            volume = 0;
+		}
+        else
+		{
+            
+            volume += 10f;
+            
+		}
+        
+        soundEffects.gameObject.GetComponent<AudioSource>().volume = volume/100;
+        music.GetComponent<AudioSource>().volume = volume/100;
+        transform.GetChild(2).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "Volume: " + volume + "%";
+	}
+    public void FullScreen()
+	{
+        Screen.fullScreen = !Screen.fullScreen;
+	}
     public void PlayText()
 	{
         curMenu.active = false;
