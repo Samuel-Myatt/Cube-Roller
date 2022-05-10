@@ -56,10 +56,15 @@ public class LevelReader : MonoBehaviour
             int tempInt;
             int.TryParse(content, out tempInt);
             tiles.Add(tempInt);
-            
             //Debug.Log("RUNNING");
         }
         firstTime = times[0];
+        string tempstring = "";
+		for (int i = 0; i < times.Count; i++)
+		{
+            tempstring += (times[i] - audioManager.secPerBeat).ToString() + "/n";
+		}
+        Debug.LogError(tempstring);
 		for (int i = 0; i < times.Count-1; i++)
 		{
             
@@ -132,7 +137,15 @@ public class LevelReader : MonoBehaviour
 			}
             
             playerTimes.Enqueue(times[count] + (turnLengths[ghostTurnsCounter] * audioManager.secPerBeat) + audioManager.secPerBeat);
-            rollGhost.RollActivate(tiles[count]);
+            if (count == turnTimes.Peek())
+            {
+                rollGhost.RollActivate(tiles[count],true);
+            }
+            else
+			{
+                rollGhost.RollActivate(tiles[count],false);
+            }
+                
             Debug.Log("PLAYER TIME LAND" + (times[count] + (turnLengths[ghostTurnsCounter] * audioManager.secPerBeat)+ audioManager.secPerBeat));
             if (count == turnTimes.Peek())
 			{

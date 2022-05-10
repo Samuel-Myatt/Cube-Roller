@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -13,7 +14,11 @@ public class MainMenuScript : MonoBehaviour
     public GameObject curMenu;
     public SoundEffectsManager soundEffects;
     public GameObject music;
+    public GameObject sFX;
     public float volume = 1f;
+    public float musicVolume = 1f;
+    public AudioMixer musicMixer;
+    public AudioMixer soundMixer;
     // Start is called before the first frame update
     void Start()
     {
@@ -78,6 +83,9 @@ public class MainMenuScript : MonoBehaviour
                             VolumeChange();
                             break;
                         case 1:
+                            VolumeChangeMusic();
+                            break;
+                        case 2:
                             FullScreen();
                             break;
 
@@ -116,10 +124,30 @@ public class MainMenuScript : MonoBehaviour
             
 		}
         
-        soundEffects.gameObject.GetComponent<AudioSource>().volume = volume/100;
-        music.GetComponent<AudioSource>().volume = volume/100;
+        //soundEffects.gameObject.GetComponent<AudioSource>().volume = volume/100;
+        soundMixer.SetFloat("SoundVolume", volume-80);
+        //music.GetComponent<AudioSource>().volume = volume/100;
         transform.GetChild(2).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "Volume: " + volume + "%";
 	}
+
+    public void VolumeChangeMusic()
+    {
+        if (musicVolume >= 100)
+        {
+            musicVolume = 0;
+        }
+        else
+        {
+
+            musicVolume += 10f;
+
+        }
+
+        //soundEffects.gameObject.GetComponent<AudioSource>().volume = musicVolume / 100;
+        //music.GetComponent<AudioSource>().volume = musicVolume / 100;
+        musicMixer.SetFloat("MusicVolume", musicVolume - 80);
+        transform.GetChild(2).GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "Music Volume: " + musicVolume + "%";
+    }
     public void FullScreen()
 	{
         Screen.fullScreen = !Screen.fullScreen;

@@ -93,15 +93,23 @@ public class rollGhost : MonoBehaviour
     {
         //health -= 0.5f * Time.deltaTime;
     }
-    public void RollActivate(int tile)
+    public void RollActivate(int tile, bool last)
 	{
-        StartCoroutine(Roll(tile));
+        StartCoroutine(Roll(tile,last));
 	}
-	IEnumerator Roll(int tile)
+	IEnumerator Roll(int tile, bool last)
     {
         Vector3 direction = Vector3.left;
         isMoving = true;
-        soundEffects.PlaySound("Land1");
+        if(last)
+		{
+            soundEffects.PlaySound("Land2");
+        }
+        else
+		{
+            soundEffects.PlaySound("Land1");
+        }
+        
         switch(curtile - tile)
 		{
             case -3:
