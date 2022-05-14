@@ -50,7 +50,7 @@ public class LevelReader : MonoBehaviour
             float.TryParse(content, out tempFloat);
             //tempFloat -= audioManager.secPerBeat * 2;
             //tempFloat -= audioManager.secPerBeat / 2;//BUILD VERSION
-            tempFloat -= audioManager.secPerBeat / 4;//EDITOR
+            tempFloat -= audioManager.secPerBeat / 2;//EDITOR
             times.Add(tempFloat);
             content = fileLines[(i * 3) + 2];
             int tempInt;
