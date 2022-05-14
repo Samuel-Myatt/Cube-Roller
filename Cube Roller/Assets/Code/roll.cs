@@ -108,7 +108,7 @@ public class roll : MonoBehaviour
         tilesManager.ResetQueue();
         levelReader.playerTimes.Clear();
         soundEffects.PlaySound("Fail");
-        //failedMove = true;
+        soundEffects.PlaySound("Fail");
         lives--;
         gameObject.transform.position = ghostCube.transform.position;
         curtile = ghostCube.GetComponent<rollGhost>().curtile;

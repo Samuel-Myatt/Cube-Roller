@@ -20,67 +20,7 @@ public class rollGhost : MonoBehaviour
     public SoundEffectsManager soundEffects;
     public Material highlightMaterial;
     public Material normalMaterial;
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-        /*if (!isMoving)
-		{
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                if((curtile%3 != 0) && (!buffer))
-				{
-                    StartCoroutine(Roll(Vector3.right));
-                    curtile += 1;
-                    GreenCheck();
-                    buffer = true;
-                }
-                
-            }
-            else if(Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                if((curtile % 3 != 1) && (!buffer))
-                {
-                    StartCoroutine(Roll(Vector3.left));
-                    curtile -= 1;
-                    GreenCheck();
-                    buffer = true;
-                }
-                    
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-				if((curtile < 7) && (!buffer))
-                {
-                    StartCoroutine(Roll(Vector3.back));
-                    curtile += 3;
-                    GreenCheck();
-                    buffer = true;
-                }
-                
-            }
-            else if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                if((curtile > 3) && (!buffer))
-                {
-                    StartCoroutine(Roll(Vector3.forward));
-                    curtile -= 3;
-                    GreenCheck();
-                    buffer = true;
-                }
-            }
-        }
-		if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow))
-		{
-            buffer = false;
-		}*/
-
-    }
     public void GreenCheck()
     {
         if (tilesManager.tiles[curtile - 1].GetComponent<FloorTile>().green == true)
@@ -89,10 +29,7 @@ public class rollGhost : MonoBehaviour
             health += 5f;
         }
     }
-    private void FixedUpdate()
-    {
-        //health -= 0.5f * Time.deltaTime;
-    }
+
     public void RollActivate(int tile, bool last)
 	{
         StartCoroutine(Roll(tile,last));

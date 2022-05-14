@@ -30,10 +30,7 @@ public class LevelWriter : MonoBehaviour
         File.AppendAllText(path, content);
         
     }
-    public void SaveFile()
-	{
 
-	}
     string newFile()
 	{
         string content = "";

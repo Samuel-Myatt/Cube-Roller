@@ -124,9 +124,9 @@ public class MainMenuScript : MonoBehaviour
             
 		}
         
-        //soundEffects.gameObject.GetComponent<AudioSource>().volume = volume/100;
+
         soundMixer.SetFloat("SoundVolume", volume-80);
-        //music.GetComponent<AudioSource>().volume = volume/100;
+
         transform.GetChild(2).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "Volume: " + volume + "%";
 	}
 
@@ -143,8 +143,6 @@ public class MainMenuScript : MonoBehaviour
 
         }
 
-        //soundEffects.gameObject.GetComponent<AudioSource>().volume = musicVolume / 100;
-        //music.GetComponent<AudioSource>().volume = musicVolume / 100;
         musicMixer.SetFloat("MusicVolume", musicVolume - 80);
         transform.GetChild(2).GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "Music Volume: " + musicVolume + "%";
     }
@@ -163,7 +161,7 @@ public class MainMenuScript : MonoBehaviour
     public void LoadLevel(int level)
 	{
         SceneManager.LoadScene(level);
-        //whatever
+
 	}
     public void SettingsText()
     {

@@ -65,40 +65,5 @@ public class TilesManager : MonoBehaviour
 	}
 
 
-    /*public void triggerTile(int tile, float delay)
-	{
-        //tiles[tile].GetComponent<FloorTile>().TriggerCall(delay);
-        tileQueue.Enqueue(tile);
-        Debug.Log(tileQueue.Count + "TILEQUEUE COUNT");
-        int tileQueueCount = tileQueue.Count;
-        for (int i = 0; i < tileQueueCount; i++)
-        {
-            Debug.Log("I IS " + i.ToString());
-            tileStack.Push(tileQueue.Dequeue());
-        }
-        Debug.Log(tileStack.Count + "TILESTACK COUNT");
-        int tileStackCount = tileStack.Count;
-        for (int i = 0; i < tileStackCount; i++)
-        {
-            tiles[tileStack.Peek()].gameObject.GetComponent<FloorTile>().Advance(i,delay);
-            tileStack2.Push(tileStack.Pop());
-        }
-        int tileStackCount2 = tileStack2.Count;
-        for (int i = 0; i < tileStackCount2; i++)
-        {
-            tileQueue.Enqueue(tileStack2.Pop());
-        }
-        if (tileQueue.Count > 4)
-        {
-            tileQueue.Dequeue();
-        }
-    }
-    */
-
     
 }
-
-/*
- * 
-*/
-//THE THING BEING RAN THROUGH MUST BE A STACK

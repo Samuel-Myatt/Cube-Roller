@@ -9,17 +9,7 @@ public class FloorTile : MonoBehaviour
     public bool green = false;
     public List<Material> mats;
     // Start is called before the first frame update
-    void Start()
-    {
-        
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void TriggerCall(float delay)
 	{
         StartCoroutine(Trigger(delay));
@@ -97,16 +87,16 @@ public class FloorTile : MonoBehaviour
         switch(tile)
 		{
             case 0:
-                //transform.GetChild(0).gameObject.active = true;
+                
                 StartCoroutine(Expand(delay, 0));
                 break;
             case 1:
-                //transform.GetChild(1).gameObject.active = true;
+                
                 StartCoroutine(Expand(delay, 1));
 
                 break;
             case 2:
-                //transform.GetChild(2).gameObject.active = true;
+                
                 StartCoroutine(Expand(delay, 2));
                 break;
             case 3:
@@ -121,19 +111,7 @@ public class FloorTile : MonoBehaviour
                 transform.GetChild(3).gameObject.active = true;
                 break;
         }
-        /*if(currTile == 0)
-		{
-            
-            transform.GetChild(currTile).gameObject.active = false;
-            currTile = 3;
-            transform.GetChild(currTile).gameObject.active = true;
-        }
-        else
-		{
-            transform.GetChild(currTile).gameObject.active = false;
-            currTile--;
-            transform.GetChild(currTile).gameObject.active = true;
-        }*/
+      
 	}
     IEnumerator Trigger(float delay)
 	{

@@ -41,22 +41,20 @@ public class LevelReader : MonoBehaviour
 	{
         int lineCount = File.ReadLines(path).Count();
         List<string> fileLines = File.ReadAllLines(path).ToList();
-        //ebug.Log(fileLines[(0 * 3) + 1]);
+
         for (int i = 0; i < lineCount / 3; i++)
         {
             string content;
             content = fileLines[(i * 3) + 1];
             float tempFloat;
             float.TryParse(content, out tempFloat);
-            //tempFloat -= audioManager.secPerBeat * 2;
-            //tempFloat -= audioManager.secPerBeat / 2;//BUILD VERSION
             tempFloat -= audioManager.secPerBeat / 2;//EDITOR
             times.Add(tempFloat);
             content = fileLines[(i * 3) + 2];
             int tempInt;
             int.TryParse(content, out tempInt);
             tiles.Add(tempInt);
-            //Debug.Log("RUNNING");
+
         }
         firstTime = times[0];
         string tempstring = "";
@@ -64,7 +62,7 @@ public class LevelReader : MonoBehaviour
 		{
             tempstring += (times[i] - audioManager.secPerBeat).ToString() + "/n";
 		}
-        Debug.LogError(tempstring);
+
 		for (int i = 0; i < times.Count-1; i++)
 		{
             
@@ -94,33 +92,13 @@ public class LevelReader : MonoBehaviour
                     
 			}
 		}
-		/*for (int i = 0; i < turnTimes.Count; i++)
-		{
-            Queue<int> turnTimesTemp = new Queue<int>;
-            if(i == 0)
-			{
-
-			}
-            else
-			{
-                times[turnTimes.Peek()] - ;
-			}
-		}*/
+		
 		
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        //Debug.Log("AUDIO MANAGERS POSITION:" + Math.Round((audioManager.songPosition), 2));
-        //Debug.Log("LEVEL READERS POSITION:" + Math.Round(times[count], 2));
-        //Debug.Log(Math.Round(audioManager.songPosition, 2) + "SONG POSITION");
-        /*if ((Math.Round(times[count],2)) == Math.Round((audioManager.songPosition),2))
-		{
-            Debug.Log(Math.Round(times[count], 2) + "ROUNDED, NEXT ONE SHOULD BE " + Math.Round(times[count+1], 2));
-            
-            tileManager.triggerTile(tiles[count]-1, audioManager.secPerBeat);
-            count++;
-		}*/
+        
 
         
         
@@ -151,7 +129,7 @@ public class LevelReader : MonoBehaviour
 			{
 				
                 turnTimes.Dequeue();
-                //playerTimes.Clear();
+                
                 GhostTurn = false;
                 player.turn = true;
                 ghostGameObject.GetComponent<Renderer>().material = rollGhost.normalMaterial;

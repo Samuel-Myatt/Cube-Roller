@@ -68,12 +68,6 @@ public class AudioManager : MonoBehaviour
         //If a new Beat Happens
         if (beats > oldbeat)
         {
-            //Random Spawn Location
-            
-
-            //Spawn Circle
-            
-
             //Update OldBeat
             oldbeat = beats;
         }
